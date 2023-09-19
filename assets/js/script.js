@@ -33,8 +33,20 @@ function appendSearchHistory(search) {
     searchHistory.push(search);
     localStorage.setItem("search-history", JSON.stringify(searchHistory));
     searchHistoryObject.html("");
+    renderHistory(); //will update the buttons to contain the new data
 }
-
+//getting the weather from the API
+function fetchWeather(location)
+{
+    //setting location variables  
+    let lattitude = location.lattitude;
+    let longitude = location.longitude;
+    let city = location.name;
+    
+    let weatherURL = `${weatherAPIURL}/data/2.5/forecast?lat=${lattitude}&lon=${longitude}&units=metric&appid=${weatherAPIKey}`;//generating new api url to get data
+    console.log(weatherURL);
+}
+//functionality to get the basic coordinate data and initial search from the API. The data gathered here will be gathered by other functions.
 function getCoords(search) {
     let queryURL = `${weatherAPIURL}/geo/1.0/direct?q=${search}&limit=4&appid=${weatherAPIKey}`; //creating the API search 
     fetch(queryURL).then(function (data) {
@@ -47,8 +59,12 @@ function getCoords(search) {
             alert("Location is not found"); //debugging null data
         }
         else {
-            appendSearchHistory(search);
-            renderHistory();
+            appendSearchHistory(search); //appends the new search to the end of the array
+            //for(let i = 0; i < response.length; i++)
+            //{
+                fetchWeather(response[0]); //sending the response to the fetchweather function
+            //}
+            
         }
     })
 }
