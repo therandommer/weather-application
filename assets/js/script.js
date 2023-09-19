@@ -8,8 +8,14 @@ let searchForm = $("#search-form");
 
 function getCoords(search)
 {
-    let queryURL = weatherAPIURL + weatherAPIKey; //combining URL and key together to work for future API calls
-    
+    let queryURL = `${weatherAPIURL}/geo/1.0/direct?q=${search}&limit=4appid=${weatherAPIKey}`; //creating the API search 
+    fetch(queryURL).then(function(data)
+    {
+        return data.json();
+    }).then(function(response)
+    {
+        console.log(response);
+    })
 }
 
 //on submission of the form do the following logic
