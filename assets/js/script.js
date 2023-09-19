@@ -1,6 +1,6 @@
 //---Weather API link + API Key---
-const weatherAPIURL = "http://api.openweathermap.org/data/2.5/forecast?id=524901&appid=";
-const weatherAPIKey = "fc1d08db9eaac3612aaa3d039b879061";
+const weatherAPIURL = "http://api.openweathermap.org/";
+const weatherAPIKey = "e5e4490a81ab20d50831822b41ef579b";
 
 //---Object References---
 let searchInput = $("#search-input");
@@ -8,9 +8,10 @@ let searchForm = $("#search-form");
 
 function getCoords(search)
 {
-    let queryURL = `${weatherAPIURL}/geo/1.0/direct?q=${search}&limit=4appid=${weatherAPIKey}`; //creating the API search 
+    let queryURL = `${weatherAPIURL}/geo/1.0/direct?q=${search}&limit=4&appid=${weatherAPIKey}`; //creating the API search 
     fetch(queryURL).then(function(data)
     {
+        console.log(queryURL);
         return data.json();
     }).then(function(response)
     {
