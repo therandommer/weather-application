@@ -9,6 +9,7 @@ let searchInput = $("#search-input");
 let searchForm = $("#search-form");
 let searchHistoryObject = $("#history");
 
+//will draw buttons based on the data in the searchHistory array
 function renderHistory() {
 
     for (let i = 0; i < searchHistory.length; i++) //generating a search history based off prior results
@@ -22,6 +23,7 @@ function renderHistory() {
     }
 }
 
+//will append valid buttons to the end of the searchHistory array
 function appendSearchHistory(search) {
     if (searchHistory.indexOf(search) !== -1) //check if the search exists already
     {
@@ -51,13 +53,27 @@ function getCoords(search) {
     })
 }
 
+//will load from stored data generated from earlier sessions
+function loadHistory()
+{
+    let storedHistory = localStorage.getItem("search-history");
+
+    if(storedHistory)
+    {
+        searchHistory = JSON.parse(storedHistory); //converts the valid storedHistory array into a JSON oject for use throughout the code
+    }
+    renderHistory(); //draws the buttons with the new information.
+}
+
 //on submission of the form do the following logic
 function submitForm(event) {
     console.log("Reached here");
     event.preventDefault();
     let currentSearch = searchInput.val().trim();//removes unnecessary spaces from the search form
 
+    
     getCoords(currentSearch);
 }
 
+loadHistory();
 searchForm.on("submit", submitForm);
